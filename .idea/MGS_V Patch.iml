@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="CPP_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/main.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/patcher_utility.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/patcher_utility.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/readFile.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/readFile.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/simple.c" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/bin" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="Header Search Paths">
+        <CLASSES>
+          <root url="file://D:/CDev/MinGW-W64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" />
+          <root url="file://D:/CDev/MinGW-W64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include-fixed" />
+          <root url="file://D:/CDev/MinGW-W64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/objc" />
+          <root url="file://D:/CDev/MinGW-W64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/ssp" />
+          <root url="file://D:/CDev/MinGW-W64/mingw64/x86_64-w64-mingw32/include" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://D:/CDev/MinGW-W64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" />
+          <root url="file://D:/CDev/MinGW-W64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include-fixed" />
+          <root url="file://D:/CDev/MinGW-W64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/objc" />
+          <root url="file://D:/CDev/MinGW-W64/mingw64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/ssp" />
+          <root url="file://D:/CDev/MinGW-W64/mingw64/x86_64-w64-mingw32/include" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>
