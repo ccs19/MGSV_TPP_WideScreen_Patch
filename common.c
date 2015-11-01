@@ -20,7 +20,7 @@ void printSummary(){
     printf("\n");
     printf("\n\"METAL GEAR SOLID\" is a registered trademark of Konami Digital Entertainment Co., Ltd.\n\n");
     printf("press enter to exit...");
-    //getchar();TODO uncomment
+    getchar();
     exit(0);
 }
 

@@ -14,6 +14,8 @@
       <sourceFolder url="file://$MODULE_DIR$/readFile.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/readFile.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/simple.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/strmap.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/strmap.h" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/bin" />
     </content>
     <orderEntry type="inheritedJdk" />

@@ -8,5 +8,6 @@
 int main(){
     char* msg = "This is a message fool";
     printf("%s",msg);
+    getchar();
     return 0;
 }

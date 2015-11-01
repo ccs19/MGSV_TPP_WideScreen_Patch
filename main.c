@@ -25,9 +25,9 @@ limitations under the License.
 //hex to look for: 66 6f 6f 6c
 //hex to replace: 64 75 64 65
 int main() {
+    //TODO add warning to backup exe
     initLogger();
     beginPatch();
-    LogD("Test");
     printSummary();
     return 0;
 }

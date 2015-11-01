@@ -42,8 +42,17 @@ limitations under the License.
 #include <sys/time.h>
 
 
+/**Log levels**/
+#define CCS_LOG_LEVEL_VERBOSE 5
+#define CCS_LOG_LEVEL_INFO 4
+#define CCS_LOG_LEVEL_DEBUG 3
+#define CCS_LOG_LEVEL_WARN 2
+#define CCS_LOG_LEVEL_ERROR 1
+#define CCS_LOG_LEVEL_OFF 0
+
+
 /**Settings**/
-#define CCS_LOGS_LEVEL 3
+#define CCS_LOGS_LEVEL CCS_LOG_LEVEL_DEBUG
 
 
 //Max log entry size. If you exceed this, you either need to shorten your logs
@@ -60,26 +69,32 @@ extern void makeMessage(FILE *output, const char *tag, const char *func, const i
 #define LogW(fmt, ...)
 #define LogD(fmt, ...)
 #define LogI(fmt, ...)
+#define LogV(fmt, ...)
 
 
-#if(CCS_LOGS_LEVEL >= 1)
+#if(CCS_LOGS_LEVEL >= CCS_LOG_LEVEL_ERROR)
 #undef LogE
 #define LogE(fmt, ...)  makeMessage(stderr, "ERROR", __func__, __LINE__, fmt, ##__VA_ARGS__)
 #endif
 
-#if(CCS_LOGS_LEVEL >= 2)
+#if(CCS_LOGS_LEVEL >= CCS_LOG_LEVEL_WARN)
 #undef LogW
 #define LogW(fmt, ...)  makeMessage(stderr, "WARN", __func__, __LINE__, fmt, ##__VA_ARGS__)
 #endif
 
-#if(CCS_LOGS_LEVEL >= 3)
+#if(CCS_LOGS_LEVEL >= CCS_LOG_LEVEL_DEBUG)
 #undef LogD
 #define LogD(fmt, ...) makeMessage(stdout, "DEBUG", __func__, __LINE__, fmt, ##__VA_ARGS__)
 #endif
 
-#if(CCS_LOGS_LEVEL >= 4)
+#if(CCS_LOGS_LEVEL >= CCS_LOG_LEVEL_INFO)
 #undef LogI
 #define LogI(fmt, ...)  makeMessage(stdout, "INFO", __func__, __LINE__, fmt, ##__VA_ARGS__)
+#endif
+
+#if(CCS_LOGS_LEVEL >= CCS_LOG_LEVEL_VERBOSE)
+#undef LogV
+#define LogV(fmt, ...)  makeMessage(stdout, "VERBOSE", __func__, __LINE__, fmt, ##__VA_ARGS__)
 #endif
 
 

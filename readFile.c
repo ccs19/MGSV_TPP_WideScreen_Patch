@@ -9,8 +9,8 @@ BinaryFile* getBinaryFile(char *name){
     LogD("Attempting to access file %s", name);
 
     FILE* file = openBinaryFile(name, "rb");
-    long size = getFileSizeInBytes(file);
-    long bytesRead = 0;
+    unsigned long size = getFileSizeInBytes(file);
+    unsigned long bytesRead = 0;
 
     BinaryFile* binaryFile = malloc(sizeof(BinaryFile));
     binaryFile->fileName = malloc((strlen(name)+1));
@@ -23,23 +23,23 @@ BinaryFile* getBinaryFile(char *name){
     return binaryFile;
 }
 
-void binaryFileInfo(BinaryFile* binaryFile, long bytesRead){
+void binaryFileInfo(BinaryFile* binaryFile, unsigned long bytesRead){
     LogD("Completed read of binary file. Stats:");
     LogD("Name: %s",binaryFile->fileName);
     LogD("Expected bytes read: %ld", binaryFile->binarySize +1);
     LogD("Actual bytes read: %ld", bytesRead);
-    if(bytesRead == binaryFile->binarySize+1){
+    /**if(bytesRead == binaryFile->binarySize+1){
         LogD("Successfully loaded file :-)");
     }else{
         LogE("Failed to read the entire file, cannot continue");
         printSummary();
-    }
+    }**/
 
 }
 
-long getFileSizeInBytes(FILE* file){
+unsigned long getFileSizeInBytes(FILE* file){
     fseek(file, 0L, SEEK_END);
-    long size = ftell(file);
+    unsigned long size = ftell(file);
     rewind(file);
     return size;
 }
@@ -54,7 +54,7 @@ FILE* openBinaryFile(char* name, char* args){
         exit(0);
     }
 }
-
+/**
 int writeChanges(BinaryFile* binaryFile){
     LogD("Attempting to write changes to %s", binaryFile->fileName);
     FILE* file = openBinaryFile(binaryFile->fileName, "r+b");
@@ -69,14 +69,13 @@ int writeChanges(BinaryFile* binaryFile){
     LogD("Original File Size: %ld", binaryFile->binarySize);
     LogD("Patched  File Size: %ld", getFileSizeInBytes(file));
     return 0;
-}
+}**/
 
-byte* readAllBytes(FILE* file,long size, long* bytesRead){
+byte* readAllBytes(FILE* file,unsigned long size, unsigned long* bytesRead){
     byte* buffer = malloc(size+1);
-    rewind(file);
+    fseek(file, 0, SEEK_SET);
     while(feof(file) == 0) {
-        (*bytesRead)++;
-        fread(buffer, 1, 1, file);
+        fread(buffer, 1, size, file);
     }
     return buffer;
 }
