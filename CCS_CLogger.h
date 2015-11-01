@@ -52,14 +52,14 @@ limitations under the License.
 
 
 /**Settings**/
-#define CCS_LOGS_LEVEL CCS_LOG_LEVEL_DEBUG
+#define CCS_LOGS_LEVEL CCS_LOG_LEVEL_OFF
 
 
 //Max log entry size. If you exceed this, you either need to shorten your logs
 //or you should be using a more robust logging system :-)
 #define CCS_CLogger_BUFFER_SIZE 1024
 #define CCS_CLogger_LOGGER_FORMAT "[%lld] %20s [%s] %s\n"
-
+extern void setLogLevel(int);
 extern long long getTimeMilliseconds();
 extern void initLogger();
 extern void makeMessage(FILE *output, const char *tag, const char *func, const int line, const char *format, ...);

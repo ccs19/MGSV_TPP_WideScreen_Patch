@@ -47,3 +47,10 @@ void makeMessage(FILE *output, const char *tag, const char *func, const int line
     va_end(args);
     fflush(output);
 }
+
+void setLogLevel(int logLevel){
+#ifdef CCS_LOGS_LEVEL
+#undef CCS_LOGS_LEVEL
+#endif
+#define CCS_LOGS_LEVEL logLevel
+}
