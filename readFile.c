@@ -2,24 +2,45 @@
 // Created by chris_000 on 10/31/2015.
 //
 
-#include <stdlib.h>
 #include "readFile.h"
 
 
-BinaryFile* readEntireFile(char* name){
+BinaryFile* getBinaryFile(char *name){
     LogD("Attempting to access file %s", name);
-    BinaryFile* binaryFile = NULL;
+
     FILE* file = openBinaryFile(name, "rb");
     long size = getFileSizeInBytes(file);
-    LogD("Successfully opened file with size of %ld bytes", size);
+    long bytesRead = 0;
+
+    BinaryFile* binaryFile = malloc(sizeof(BinaryFile));
+    binaryFile->fileName = malloc((strlen(name)+1));
+    memcpy(binaryFile->fileName, name, (strlen(name)+1));
+    binaryFile->binarySize = size;
+    binaryFile->bytes = readAllBytes(file, size, &bytesRead);
+    binaryFileInfo(binaryFile,bytesRead);
+
+    fclose(file); //TODO add a check for successful close.
     return binaryFile;
 }
 
+void binaryFileInfo(BinaryFile* binaryFile, long bytesRead){
+    LogD("Completed read of binary file. Stats:");
+    LogD("Name: %s",binaryFile->fileName);
+    LogD("Expected bytes read: %ld", binaryFile->binarySize +1);
+    LogD("Actual bytes read: %ld", bytesRead);
+    if(bytesRead == binaryFile->binarySize+1){
+        LogD("Successfully loaded file :-)");
+    }else{
+        LogE("Failed to read the entire file, cannot continue");
+        printSummary();
+    }
+
+}
 
 long getFileSizeInBytes(FILE* file){
     fseek(file, 0L, SEEK_END);
     long size = ftell(file);
-    fseek(file, 0L, SEEK_SET);
+    rewind(file);
     return size;
 }
 
@@ -48,6 +69,16 @@ int writeChanges(BinaryFile* binaryFile){
     LogD("Original File Size: %ld", binaryFile->binarySize);
     LogD("Patched  File Size: %ld", getFileSizeInBytes(file));
     return 0;
+}
+
+byte* readAllBytes(FILE* file,long size, long* bytesRead){
+    byte* buffer = malloc(size+1);
+    rewind(file);
+    while(feof(file) == 0) {
+        (*bytesRead)++;
+        fread(buffer, 1, 1, file);
+    }
+    return buffer;
 }
 
 
