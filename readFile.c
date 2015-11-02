@@ -17,10 +17,37 @@ limitations under the License.
 #include "readFile.h"
 
 
-BinaryFile* getBinaryFile(char *name){
-    LogD("Attempting to access file %s", name);
+void iter(const char *key, const char *value, const void *obj){
+    LogV("key: %s val: %s",key, value);
+}
 
-    FILE* file = openBinaryFile(name, "rb");
+StrMap* readConfig() {
+    StrMap* map = sm_new(16);
+    FILE* fp = fopen(CONFIG_FILE, "r");
+    char* key;
+    char* val;
+    char buffer[256];
+    if(fp != NULL){
+        while(fgets(buffer, sizeof(buffer), fp) != NULL){
+            key = strtok(buffer, "=");
+            val = strtok(NULL, "=");
+            if((key && val) && !(strcmp(key, "\r\n"))) {
+                    val[strlen(val) - 1] = '\0';
+                    sm_put(map, key, val);
+
+            }
+        }
+    }else{
+        LogE("Failed to open config file %s", CONFIG_FILE);
+    }
+    sm_enum(map,iter,NULL);
+    return map;
+}
+
+
+BinaryFile* getBinaryFile(char* name){
+    LogD("Attempting to access file %s-", name);
+    FILE* file = openBinaryFile(name, "r+b");
     unsigned long size = getFileSizeInBytes(file);
     unsigned long bytesRead = 0;
 
@@ -62,7 +89,7 @@ FILE* openBinaryFile(char* name, char* args){
         int errorNum = errno;
         LogE("Error opening file %s. Cannot proceed.", name);
         printError(errorNum);
-        getchar();
+        if(DEBUG_MODE)getchar();
         exit(0);
     }
 }

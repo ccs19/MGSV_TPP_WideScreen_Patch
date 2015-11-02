@@ -17,7 +17,6 @@ limitations under the License.
 
 
 #include <string.h>
-#include <stdlib.h>
 #include "CCS_CLogger.h"
 
 long long CCS_CLogger_programStartTime;
@@ -32,6 +31,7 @@ long long getTimeMilliseconds() {
 
 void initLogger(){
     CCS_CLogger_programStartTime = getTimeMilliseconds();
+//    CCS_LOG_LEVEL = CCS_LOGS_LEVEL_DEFAULT;
 }
 
 void makeMessage(FILE *output, const char *tag, const char *func, const int line, const char *format, ...) {
@@ -49,8 +49,5 @@ void makeMessage(FILE *output, const char *tag, const char *func, const int line
 }
 
 void setLogLevel(int logLevel){
-#ifdef CCS_LOGS_LEVEL
-#undef CCS_LOGS_LEVEL
-#endif
-#define CCS_LOGS_LEVEL logLevel
+ //   CCS_LOG_LEVEL = logLevel;
 }

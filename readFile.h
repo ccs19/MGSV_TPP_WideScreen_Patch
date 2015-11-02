@@ -19,24 +19,32 @@ limitations under the License.
 
 #include "common.h"
 
+#define CONFIG_FILE "MGSV_TPP_WideScreen_Patch.properties"
+
 typedef struct{
+    float horizontalRes;
+    float verticalRes;
+    unsigned char* lookFor;
+    unsigned char* replaceWith;
+    int backupExecutable;
+    char* backupExecutableName;
     long binarySize;
     char* fileName;
     byte* bytes;
 }BinaryFile;
 
-BinaryFile*getBinaryFile(char *name);
+StrMap* readConfig();
+
+void iter(const char *key, const char *value, const void *obj);
+
+BinaryFile* getBinaryFile(char* name);
 
 unsigned long getFileSizeInBytes(FILE* file);
 
 FILE* openBinaryFile(char* name, char* args);
 
-
-
 byte* readAllBytes(FILE* file, unsigned long size, unsigned long* bytesRead);
 
 void binaryFileInfo(BinaryFile* binaryFile, unsigned long bytesRead);
-
-
 
 #endif //MGS_V_PATC_READFILE_H

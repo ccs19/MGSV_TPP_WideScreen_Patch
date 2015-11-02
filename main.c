@@ -15,20 +15,24 @@ limitations under the License.
 **/
 
 #include <unistd.h>
-
 #include "common.h"
 #include "patcher_utility.h"
 
 
 
 
-//hex to look for: 66 6f 6f 6c
+
+
+//Test value: @@@@
+//horizontal is 30
+//vertical is 9.98694536865365
+//hex is 40 40 40 40
 //hex to replace: 64 75 64 65
 int main() {
+    initLogger();
     LogW("This currently does not back up your executable. Be sure to back it up!");
     LogW("If you're ready to proceed, press enter, otherwise close the window");
-    getchar();
-    initLogger();
+    if(!DEBUG_MODE)getchar();
     beginPatch();
     printSummary();
     return 0;

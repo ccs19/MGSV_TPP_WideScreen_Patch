@@ -74,25 +74,28 @@ BOOL executeCommandLine(LPSTR cmdLine, DWORD & exitCode)
 int main() {
     DWORD exitCode;
     LPSTR program = (LPSTR) "C:\\Users\\chris_000\\ClionProjects\\MGS_V Patch\\bin\\Debug\\MGS_V_Patch.exe";
+    LPWSTR pMessage = L"%1!*.*s! %3 %4!*s!";
+
+    DWORD_PTR args[] = { (DWORD_PTR)4, (DWORD_PTR)2, (DWORD_PTR)L"Bill",  // %1!*.*s! refers back to the first insertion string in pMessage
+                          (DWORD_PTR)L"Bob",                                                // %4 refers back to the second insertion string in pMessage
+                          (DWORD_PTR)6, (DWORD_PTR)L"Bill"  };
     if(executeCommandLine(program, exitCode)) {
         LPTSTR exitCodeStr;
         HMODULE Hand = LoadLibrary("NTDLL.DLL");
         FormatMessage(
-                FORMAT_MESSAGE_ALLOCATE_BUFFER |
-                FORMAT_MESSAGE_FROM_SYSTEM |
-                FORMAT_MESSAGE_FROM_HMODULE|
-                FORMAT_MESSAGE_IGNORE_INSERTS,
+                FORMAT_MESSAGE_FROM_STRING | FORMAT_MESSAGE_ARGUMENT_ARRAY,
+                //FORMAT_MESSAGE_IGNORE_INSERTS,
                 Hand,
                 exitCode,
                 MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
                 (LPSTR) &exitCodeStr,
                 0,
-                NULL);
-
-
-        std::cout << std::endl << exitCodeStr;
+                (va_list*)&args);
+        std::cout<<"asdfasdf"<<exitCodeStr<<std::endl;
+        wprintf(L"Formatted message: %s\n", exitCodeStr);
         LocalFree(exitCodeStr);
         FreeLibrary(Hand);
+
     }
     return 0;
 }

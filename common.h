@@ -23,9 +23,10 @@ limitations under the License.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "strmap.h"
 #include "CCS_CLogger.h"
 
-#define CONFIG_FILE "mgsv_patcher.cfg"
+#define DEBUG_MODE 1
 
 typedef unsigned char byte;
 

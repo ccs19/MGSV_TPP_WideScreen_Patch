@@ -32,7 +32,7 @@ void printSummary(){
     printf("\n");
     printf("\n\"METAL GEAR SOLID\" is a registered trademark of Konami Digital Entertainment Co., Ltd.\n\n");
     printf("press enter to exit...");
-    getchar();
+    if(!DEBUG_MODE)getchar();
     exit(0);
 }
 
@@ -40,6 +40,6 @@ void printError(int errorNum){
     char* err = strerror(errorNum);
     LogE("Reason: %s", err);
     LogE("Cannot continue. Press any key to continue...");
-    getchar();
+    if(!DEBUG_MODE)getchar();
     printSummary();
 }

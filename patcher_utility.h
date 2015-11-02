@@ -20,14 +20,25 @@ limitations under the License.
 #include "common.h"
 #include "readFile.h"
 
+typedef struct{
+    unsigned char lookFor[4];
+    unsigned char replaceWith[4];
+}PatchValuesWideScreen;
+
 unsigned int floatToHex(float f);
 
 void beginPatch();
 void patchInitMessage(unsigned int lookFor, unsigned int changeTo);
 void fillMap();
+void fillConfig(BinaryFile*, StrMap*);
 void patch(BinaryFile* binaryFile, unsigned int lookFor, unsigned int changeTo);
 int writeChanges(BinaryFile* binaryFile);
 void applyBinaryPatch(BinaryFile *binaryFile, unsigned long changeTo, long foundIndex);
 unsigned long findHexLocation(BinaryFile* binaryFile, unsigned long lookFor);
-
+char* getMapVal(StrMap* map, const char* key);
+unsigned char* parseHexValues(char* hexVals);
+unsigned char* calculateNewHex(float horizontal, float vertical);
+int getNumHexEntries(char* hexVals);
+unsigned char hexToUnsignedChar(char* hexVal);
+unsigned char hctoi(const char h);
 #endif //MGS_V_PATCH_UTILITY_H

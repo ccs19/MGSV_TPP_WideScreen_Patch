@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 int main(){
-    char* msg = "This is a message fool";
+    char* msg = "This is a message @@@@";
     printf("%s",msg);
     getchar();
     return 0;
