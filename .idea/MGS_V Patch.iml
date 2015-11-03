@@ -3,8 +3,10 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/CCS_CLogger.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CCS_CLogger.cfg" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CCS_CLogger.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/MGSV_TPP_WideScreen_Patch.cfg" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.c" isTestSource="false" />
