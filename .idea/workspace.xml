@@ -13,11 +13,8 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69c674e1-610d-422c-ba8b-bb6ef11e0e10" name="Default" comment="Updated error in config file">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/Debug/ErrorCheck.exe" afterPath="$PROJECT_DIR$/bin/Debug/ErrorCheck.exe" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/Debug/MGS_V_Patch.exe" afterPath="$PROJECT_DIR$/bin/Debug/MGS_V_Patch.exe" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/Debug/simple.exe" afterPath="$PROJECT_DIR$/bin/Debug/simple.exe" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/patcher_utility.c" afterPath="$PROJECT_DIR$/patcher_utility.c" />
+    <list default="true" id="69c674e1-610d-422c-ba8b-bb6ef11e0e10" name="Default" comment="">
+      <change type="MOVED" beforePath="C:\Users\chris_000\ClionProjects\MGS_V Patch\bin\Debug\MGS_V_Widescreen_patch.zip" afterPath="$PROJECT_DIR$/bin/Debug/MGS_V_Widescreen_patch v0.1a.zip" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MGS_V Patc.iws" />
@@ -59,11 +56,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="patcher_utility.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="patcher_utility.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/patcher_utility.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7267373">
-              <caret line="162" column="5" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
+            <state vertical-scroll-proportion="-19.289474">
+              <caret line="166" column="0" selection-start-line="166" selection-start-column="0" selection-end-line="166" selection-end-column="0" />
               <folding>
                 <element signature="e#575#593#0" expanded="true" />
               </folding>
@@ -91,10 +88,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MGSV_TPP_WideScreen_Patch.cfg" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MGSV_TPP_WideScreen_Patch.cfg" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bin/Debug/MGSV_TPP_WideScreen_Patch.cfg">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.157895">
+            <state vertical-scroll-proportion="0.58892816">
               <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
               <folding />
             </state>
@@ -407,7 +404,25 @@
       <option name="project" value="LOCAL" />
       <updated>1446534072699</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Completed.">
+      <created>1446534324346</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1446534324346</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Commit zip">
+      <created>1446534353427</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1446534353427</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Added config">
+      <created>1446534374140</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1446534374140</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -464,7 +479,10 @@
     <MESSAGE value="Working on implementing config file." />
     <MESSAGE value="Tool appears to work" />
     <MESSAGE value="Updated error in config file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated error in config file" />
+    <MESSAGE value="Completed." />
+    <MESSAGE value="Commit zip" />
+    <MESSAGE value="Added config" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added config" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -901,21 +919,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/Debug/MGSV_TPP_WideScreen_Patch.cfg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.157895">
-          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/patcher_utility.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7267373">
-          <caret line="162" column="5" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
+        <state vertical-scroll-proportion="-19.289474">
+          <caret line="166" column="0" selection-start-line="166" selection-start-column="0" selection-end-line="166" selection-end-column="0" />
           <folding>
             <element signature="e#575#593#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/Debug/MGSV_TPP_WideScreen_Patch.cfg">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.58892816">
+          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
