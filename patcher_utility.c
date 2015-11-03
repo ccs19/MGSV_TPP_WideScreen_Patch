@@ -161,6 +161,7 @@ int writeChanges(BinaryFile* binaryFile){
     }else{
         LogD("Patch appears to have been applied successfully! Yay!");
     }
+    fclose(file);
     return result;
 }
 

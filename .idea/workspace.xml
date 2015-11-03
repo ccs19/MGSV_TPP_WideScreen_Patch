@@ -13,9 +13,11 @@
     </ADDITIONAL_GENERATION_ENVIRONMENT>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69c674e1-610d-422c-ba8b-bb6ef11e0e10" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MGSV_TPP_WideScreen_Patch.cfg" afterPath="$PROJECT_DIR$/MGSV_TPP_WideScreen_Patch.cfg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/MGS_V Patch.iml" afterPath="$PROJECT_DIR$/.idea/MGS_V Patch.iml" />
+    <list default="true" id="69c674e1-610d-422c-ba8b-bb6ef11e0e10" name="Default" comment="Updated error in config file">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/Debug/ErrorCheck.exe" afterPath="$PROJECT_DIR$/bin/Debug/ErrorCheck.exe" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/Debug/MGS_V_Patch.exe" afterPath="$PROJECT_DIR$/bin/Debug/MGS_V_Patch.exe" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/Debug/simple.exe" afterPath="$PROJECT_DIR$/bin/Debug/simple.exe" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/patcher_utility.c" afterPath="$PROJECT_DIR$/patcher_utility.c" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MGS_V Patc.iws" />
@@ -57,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="patcher_utility.c" pinned="false" current-in-tab="false">
+      <file leaf-file-name="patcher_utility.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/patcher_utility.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-34.342106">
-              <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.7267373">
+              <caret line="162" column="5" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
               <folding>
                 <element signature="e#575#593#0" expanded="true" />
               </folding>
@@ -89,11 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MGSV_TPP_WideScreen_Patch.cfg" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MGSV_TPP_WideScreen_Patch.cfg" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bin/Debug/MGSV_TPP_WideScreen_Patch.cfg">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5300353">
-              <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+            <state vertical-scroll-proportion="-13.157895">
+              <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -169,10 +171,10 @@
         <option value="$PROJECT_DIR$/common.h" />
         <option value="$PROJECT_DIR$/bin/Debug/MGSV_TPP_WideScreen_Patch.properties" />
         <option value="$PROJECT_DIR$/CCS_CLogger.h" />
-        <option value="$PROJECT_DIR$/patcher_utility.c" />
         <option value="$PROJECT_DIR$/readFile.h" />
         <option value="$PROJECT_DIR$/MGSV_TPP_WideScreen_Patch.cfg" />
         <option value="$PROJECT_DIR$/bin/Debug/MGSV_TPP_WideScreen_Patch.cfg" />
+        <option value="$PROJECT_DIR$/patcher_utility.c" />
       </list>
     </option>
   </component>
@@ -399,7 +401,13 @@
       <option name="project" value="LOCAL" />
       <updated>1446533681798</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Updated error in config file">
+      <created>1446534072699</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1446534072699</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
@@ -413,9 +421,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-2568" y="-8" width="2576" height="1426" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17226219" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17226219" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931727" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25783134" sideWeight="0.44646385" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3253012" sideWeight="0.48281312" order="8" side_tool="false" content_ui="tabs" />
@@ -455,7 +463,8 @@
     <MESSAGE value="Added Apache license terms" />
     <MESSAGE value="Working on implementing config file." />
     <MESSAGE value="Tool appears to work" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tool appears to work" />
+    <MESSAGE value="Updated error in config file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated error in config file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -472,7 +481,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/patcher_utility.c</url>
-          <line>225</line>
+          <line>226</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -860,16 +869,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/patcher_utility.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-34.342106">
-          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-          <folding>
-            <element signature="e#575#593#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/patcher_utility.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -904,9 +903,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bin/Debug/MGSV_TPP_WideScreen_Patch.cfg">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5300353">
-          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+        <state vertical-scroll-proportion="-13.157895">
+          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/patcher_utility.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7267373">
+          <caret line="162" column="5" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
+          <folding>
+            <element signature="e#575#593#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
