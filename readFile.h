@@ -19,7 +19,7 @@ limitations under the License.
 
 #include "common.h"
 
-#define CONFIG_FILE "MGSV_TPP_WideScreen_Patch.properties"
+#define CONFIG_FILE "MGSV_TPP_WideScreen_Patch.cfg"
 
 typedef struct{
     float horizontalRes;
@@ -46,5 +46,7 @@ FILE* openBinaryFile(char* name, char* args);
 byte* readAllBytes(FILE* file, unsigned long size, unsigned long* bytesRead);
 
 void binaryFileInfo(BinaryFile* binaryFile, unsigned long bytesRead);
+
+char* getFullyQualifiedPath(char* fileName);
 
 #endif //MGS_V_PATC_READFILE_H

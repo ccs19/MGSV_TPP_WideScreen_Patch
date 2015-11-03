@@ -25,20 +25,21 @@ typedef struct{
     unsigned char replaceWith[4];
 }PatchValuesWideScreen;
 
-unsigned int floatToHex(float f);
+unsigned int floatToHexPrint(float f);
 
 void beginPatch();
-void patchInitMessage(unsigned int lookFor, unsigned int changeTo);
+void patchInitMessage(BinaryFile* binaryFile, unsigned char* lookFor, unsigned char* changeTo);
 void fillMap();
 void fillConfig(BinaryFile*, StrMap*);
-void patch(BinaryFile* binaryFile, unsigned int lookFor, unsigned int changeTo);
+void patch(BinaryFile* binaryFile, unsigned char* lookFor, unsigned char* changeTo);
 int writeChanges(BinaryFile* binaryFile);
-void applyBinaryPatch(BinaryFile *binaryFile, unsigned long changeTo, long foundIndex);
-unsigned long findHexLocation(BinaryFile* binaryFile, unsigned long lookFor);
+void applyBinaryPatch(BinaryFile *binaryFile, long foundIndex);
+long findHexLocation(BinaryFile* binaryFile, unsigned char* lookFor);
 char* getMapVal(StrMap* map, const char* key);
 unsigned char* parseHexValues(char* hexVals);
 unsigned char* calculateNewHex(float horizontal, float vertical);
 int getNumHexEntries(char* hexVals);
 unsigned char hexToUnsignedChar(char* hexVal);
 unsigned char hctoi(const char h);
+unsigned char* floatToHex(float val);
 #endif //MGS_V_PATCH_UTILITY_H

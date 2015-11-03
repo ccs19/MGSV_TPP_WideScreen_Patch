@@ -15,6 +15,7 @@ limitations under the License.
 **/
 
 #include <unistd.h>
+#include <windows.h>
 #include "common.h"
 #include "patcher_utility.h"
 
@@ -35,6 +36,23 @@ int main() {
     if(!DEBUG_MODE)getchar();
     beginPatch();
     printSummary();
+
+
+    /**If I want to add console colors...
+    HANDLE  hConsole;
+    int k;
+
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    // you can loop k higher to see more color choices
+    for(k = 0; k < 512; k++)
+    {
+        SetConsoleTextAttribute(hConsole, k);
+        printf("%3d  %s\n", k, "I want to be nice today!");
+    }
+
+    SetConsoleTextAttribute(hConsole,7);**/
+
     return 0;
 }
 

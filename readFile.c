@@ -15,13 +15,14 @@ limitations under the License.
 **/
 
 #include "readFile.h"
-
+#include <unistd.h>
 
 void iter(const char *key, const char *value, const void *obj){
     LogV("key: %s val: %s",key, value);
 }
 
 StrMap* readConfig() {
+    LogV("Entering readConfig(). Config %s", CONFIG_FILE);
     StrMap* map = sm_new(16);
     FILE* fp = fopen(CONFIG_FILE, "r");
     char* key;
@@ -31,22 +32,23 @@ StrMap* readConfig() {
         while(fgets(buffer, sizeof(buffer), fp) != NULL){
             key = strtok(buffer, "=");
             val = strtok(NULL, "=");
-            if((key && val) && !(strcmp(key, "\r\n"))) {
+            if(key != NULL && val != NULL && (strcmp(key, "\n") != 0)) {
+                LogV("Key: %s, Val: %s", key, val);
                     val[strlen(val) - 1] = '\0';
                     sm_put(map, key, val);
-
             }
         }
     }else{
         LogE("Failed to open config file %s", CONFIG_FILE);
     }
     sm_enum(map,iter,NULL);
+    LogV("Exiting readConfig()");
     return map;
 }
 
 
 BinaryFile* getBinaryFile(char* name){
-    LogD("Attempting to access file %s-", name);
+    LogV("Entering getBinaryFile");
     FILE* file = openBinaryFile(name, "r+b");
     unsigned long size = getFileSizeInBytes(file);
     unsigned long bytesRead = 0;
@@ -57,8 +59,8 @@ BinaryFile* getBinaryFile(char* name){
     binaryFile->binarySize = size;
     binaryFile->bytes = readAllBytes(file, size, &bytesRead);
     binaryFileInfo(binaryFile,bytesRead);
-
     fclose(file); //TODO add a check for successful close.
+    LogV("Exiting getBinaryFile");
     return binaryFile;
 }
 
@@ -84,6 +86,7 @@ unsigned long getFileSizeInBytes(FILE* file){
 }
 
 FILE* openBinaryFile(char* name, char* args){
+    LogV("Entering openBinaryFile(%s, %s)", name, args);
     FILE* file = fopen(name, args);
     if(!file){
         int errorNum = errno;
@@ -91,7 +94,11 @@ FILE* openBinaryFile(char* name, char* args){
         printError(errorNum);
         if(DEBUG_MODE)getchar();
         exit(0);
+    }else{
+        LogV("Successfully opened file %s in mode %s at %p", name, args, file);
     }
+    LogV("Exiting openBinaryFile(%s, %s)", name, args);
+    return file;
 }
 /**
 int writeChanges(BinaryFile* binaryFile){
@@ -110,15 +117,36 @@ int writeChanges(BinaryFile* binaryFile){
     return 0;
 }**/
 
-byte* readAllBytes(FILE* file,unsigned long size, unsigned long* bytesRead){
-    byte* buffer = malloc(size+1);
-    fseek(file, 0, SEEK_SET);
-    while(feof(file) == 0) {
-        fread(buffer, 1, size, file);
+byte* readAllBytes(FILE* file,unsigned long size, unsigned long* bytesRead) {
+    LogV("Entering function(%p, %ul, %p)", file, size, bytesRead);
+    if (!file) {
+        LogE("Can't read file %p", file);
+        printSummary();
+    } else {
+        byte *buffer = malloc(size + 1);
+        fseek(file, 0, SEEK_SET);
+        while (feof(file) == 0) {
+            fread(buffer, 1, size, file);
+        }
+        LogV("Exiting function()");
+        return buffer;
     }
-    return buffer;
 }
 
+char* getFullyQualifiedPath(char* fileName){
+    char* pwd = getcwd(NULL, NULL);
+    LogD("Trying to open %s\\%s", pwd,fileName);
+    char* fullyQualifiedPath = malloc(strlen(pwd) + strlen(fileName)+5);
+    memset(fullyQualifiedPath,0,strlen(pwd) + strlen(fileName)+5);
+    strcat(fullyQualifiedPath,"\"");
+    strcat(fullyQualifiedPath,pwd);
+    strcat(fullyQualifiedPath,"\\");
+    strcat(fullyQualifiedPath,fileName);
+    strcat(fullyQualifiedPath,"\"");
+    free(pwd);
+    LogV("Build fully qualified path:\n%s", fullyQualifiedPath);
+    return (fullyQualifiedPath);
+}
 
 
 

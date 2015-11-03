@@ -26,7 +26,7 @@ limitations under the License.
 #include "strmap.h"
 #include "CCS_CLogger.h"
 
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 
 typedef unsigned char byte;
 

@@ -26,11 +26,9 @@ const char* KEY_BACKUP_NAME = "backupExecutableName";
 const char* KEY_WIDESCREEN_HEX = "widescreenHexValues";
 
 
-unsigned int floatToHex(float f){
+unsigned int floatToHexPrint(float f){
     return *(unsigned int*)&f;
 }
-unsigned char lookForVal[] = {0x39, 0x8E, 0xE3, 0x3F};
-unsigned char replaceWithVal[] = {0xAB, 0xAA, 0xAA, 0x40};
 
 //TODO remove
 //hex to look for: 39 8e e3 ef
@@ -46,37 +44,37 @@ void beginPatch(){
 
     fillConfig(binaryFile, map);
 
-    patch( binaryFile, 0x666f6f6c, 0x64756465);
+    patch( binaryFile, binaryFile->lookFor, binaryFile->replaceWith);
     writeChanges(binaryFile);
     free(fileName);
     sm_delete(map);
 }
 
-void patch(BinaryFile* binaryFile, unsigned int lookFor, unsigned int changeTo){
-    patchInitMessage(lookFor, changeTo);
+void patch(BinaryFile* binaryFile, unsigned char* lookFor, unsigned char* changeTo){
+    patchInitMessage(binaryFile, lookFor, changeTo);
     long index = findHexLocation(binaryFile,lookFor);
-    applyBinaryPatch(binaryFile, changeTo, index);
+    applyBinaryPatch(binaryFile, index);
 }
 
-unsigned long findHexLocation(BinaryFile* binaryFile, unsigned long lookFor){
+long findHexLocation(BinaryFile* binaryFile, unsigned char* lookFor){
+    LogD("Beginning lookup of hex values");
     int lookForIndex = 0;
     int lookForSize = 4;
     long foundIndex = 0;
     int found = 0;
-    for(long i= 0; i<binaryFile->binarySize; i++){
-        //LogV("%02x ", binaryFile->bytes[i]);
-        if(i%15 == 0 && i != 0){
-           // LogV("\n");
-        }
-        fflush(stdout);
-
-        if(binaryFile->bytes[i] == lookForVal[lookForIndex]){
-            LogI("Found a match! foundIndex: %ld lookForIndex: %d", lookForIndex, foundIndex);
+    for(long i= 0; i< binaryFile->binarySize; i++){
+        //LogV("Looking for %c", lookFor[lookForIndex]);
+        if(binaryFile->bytes[i] == binaryFile->lookFor[lookForIndex]){
             if(lookForIndex++ == 0){
+                if(lookForIndex >= 2) {
+                    LogV("Found match at index %d", lookForIndex);
+                    LogV("Value: %x", binaryFile->bytes[i]);
+                }
                 foundIndex = i;
             }
             if(lookForIndex == lookForSize){
-                LogI("Found result at index %ld", foundIndex);
+                LogV("!FOUND A MATCH! foundIndex: %ld lookForIndex: %d", lookForIndex, foundIndex);
+                LogV("Found result at index %ld", foundIndex);
                 found = 1;
                 break;
             }
@@ -94,7 +92,8 @@ unsigned long findHexLocation(BinaryFile* binaryFile, unsigned long lookFor){
     return foundIndex;
 }
 
-void applyBinaryPatch(BinaryFile *binaryFile, unsigned long changeTo, long foundIndex){
+void applyBinaryPatch(BinaryFile *binaryFile, long foundIndex){
+    unsigned char* replaceWithVal = binaryFile->replaceWith;
     long index = foundIndex;
     byte* bytes = binaryFile->bytes;
     for(int i = 0; i < 4; i++){
@@ -102,21 +101,14 @@ void applyBinaryPatch(BinaryFile *binaryFile, unsigned long changeTo, long found
     }
 }
 
-/**void fillMap(){
-    for(int i = 0; i < 1; i++) {
-        if(!sm_put(map,&hexNums[i], &hexChars[i])){
-            LogE("Failed to create hex lookup map");
-        }
-    }
-}**/
-
-
-
-void patchInitMessage(unsigned int lookFor, unsigned int changeTo) {
+void patchInitMessage(BinaryFile* binaryFile, unsigned char* lookFor, unsigned char* changeTo) {
+    float hRes = binaryFile->horizontalRes;
+    float vRes = binaryFile->verticalRes;
+    unsigned char* replaceWithVal = binaryFile->replaceWith;
     LogD("Beginning widescreen patch...");
-    LogD("Looking for %x", lookFor);
-    LogD("For %dx%d resolution, the replacement value is %02x %02x %02x %02x"
-                 , 1920,1080, replaceWithVal[0], replaceWithVal[1],replaceWithVal[2],replaceWithVal[3]);
+    LogD("Looking for %02x %02x %02x %02x", lookFor[0],lookFor[1],lookFor[2],lookFor[3]);
+    LogD("For %.fx%.f resolution, the replacement value is %02x %02x %02x %02x"
+                 , hRes,vRes, replaceWithVal[0], replaceWithVal[1],replaceWithVal[2],replaceWithVal[3]);
 }
 
 
@@ -212,6 +204,24 @@ unsigned char hctoi(const char h){
         return toupper(h) - 'A' + 10;
 }
 
+
 unsigned char* calculateNewHex(float horizontal, float vertical){
-    float result = horizontal/vertical;
+    return floatToHex(horizontal/vertical);
+}
+
+/**
+ * assumes 32 bit float
+ */
+unsigned char* floatToHex(float val){
+    LogV("Float val %f", val);
+    unsigned char* hexVals = malloc(sizeof(float));
+    hexVals[0] = ((unsigned char*)&val)[0];
+    hexVals[1] = ((unsigned char*)&val)[1];
+    hexVals[2] = ((unsigned char*)&val)[2];
+    hexVals[3] = ((unsigned char*)&val)[3];
+    for(int i = 0; i < 4; i++) {
+        LogV("%x", hexVals[i]);
+    }
+    LogV("Hex values to replace %02x %02x %02x %02x", hexVals[0], hexVals[1], hexVals[2], hexVals[3]);
+    return hexVals;
 }

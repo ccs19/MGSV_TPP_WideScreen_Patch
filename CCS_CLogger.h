@@ -41,6 +41,18 @@ limitations under the License.
 #include <stdarg.h>     /* va_list, va_start, va_arg, va_end */
 #include <sys/time.h>
 
+/**
+ * Log colors
+ */
+#define KNRM  "\x1B[0m"
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KYEL  "\x1B[33m"
+#define KBLU  "\x1B[34m"
+#define KMAG  "\x1B[35m"
+#define KCYN  "\x1B[36m"
+#define KWHT  "\x1B[37m"
+#define RESET "\033[0m"
 
 /**Log levels**/
 #define CCS_LOG_LEVEL_VERBOSE 5
@@ -49,6 +61,8 @@ limitations under the License.
 #define CCS_LOG_LEVEL_WARN 2
 #define CCS_LOG_LEVEL_ERROR 1
 #define CCS_LOG_LEVEL_OFF 0
+
+
 
 
 /**Settings**/
@@ -76,12 +90,12 @@ extern void makeMessage(FILE *output, const char *tag, const char *func, const i
 
 #if(CCS_LOGS_LEVEL >= CCS_LOG_LEVEL_ERROR)
 #undef LogE
-#define LogE(fmt, ...)  makeMessage(stderr, "ERROR", __func__, __LINE__, fmt, ##__VA_ARGS__)
+#define LogE(fmt, ...)  makeMessage(stdout, "ERROR", __func__, __LINE__, fmt, ##__VA_ARGS__)
 #endif
 
 #if(CCS_LOGS_LEVEL >= CCS_LOG_LEVEL_WARN)
 #undef LogW
-#define LogW(fmt, ...)  makeMessage(stderr, "WARN", __func__, __LINE__, fmt, ##__VA_ARGS__)
+#define LogW(fmt, ...)  makeMessage(stdout, "WARN", __func__, __LINE__, fmt, ##__VA_ARGS__)
 #endif
 
 #if(CCS_LOGS_LEVEL >= CCS_LOG_LEVEL_DEBUG)

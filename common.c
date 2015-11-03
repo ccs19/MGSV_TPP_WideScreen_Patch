@@ -39,7 +39,7 @@ void printSummary(){
 void printError(int errorNum){
     char* err = strerror(errorNum);
     LogE("Reason: %s", err);
-    LogE("Cannot continue. Press any key to continue...");
+    LogE("Cannot continue...");
     if(!DEBUG_MODE)getchar();
     printSummary();
 }
