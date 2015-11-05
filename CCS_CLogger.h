@@ -55,6 +55,7 @@ limitations under the License.
 #define RESET "\033[0m"
 
 /**Log levels**/
+#define CCS_LOG_LEVEL_MORE_VERBOSE 6 //For stupid stuff that nobody needs to see
 #define CCS_LOG_LEVEL_VERBOSE 5
 #define CCS_LOG_LEVEL_INFO 4
 #define CCS_LOG_LEVEL_DEBUG 3
@@ -62,7 +63,7 @@ limitations under the License.
 #define CCS_LOG_LEVEL_ERROR 1
 #define CCS_LOG_LEVEL_OFF 0
 
-
+#define BUF_SIZE 256
 
 
 /**Settings**/
@@ -86,6 +87,7 @@ extern void makeMessage(FILE *output, const char *tag, const char *func, const i
 #define LogD(fmt, ...)
 #define LogI(fmt, ...)
 #define LogV(fmt, ...)
+#define LogMV(fmt, ...)
 
 
 #if(CCS_LOGS_LEVEL >= CCS_LOG_LEVEL_ERROR)
@@ -111,6 +113,12 @@ extern void makeMessage(FILE *output, const char *tag, const char *func, const i
 #if(CCS_LOGS_LEVEL >= CCS_LOG_LEVEL_VERBOSE)
 #undef LogV
 #define LogV(fmt, ...)  makeMessage(stdout, "VERBOSE", __func__, __LINE__, fmt, ##__VA_ARGS__)
+#endif
+
+
+#if(CCS_LOGS_LEVEL >= CCS_LOG_LEVEL_MORE_VERBOSE)
+#undef LogMV
+#define LogMV(fmt, ...)  makeMessage(stdout, "MORE", __func__, __LINE__, fmt, ##__VA_ARGS__)
 #endif
 
 

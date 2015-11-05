@@ -18,7 +18,7 @@ limitations under the License.
 #define MGS_V_PATCH_UTILITY_H
 
 #include "common.h"
-#include "readFile.h"
+#include "fileOperations.h"
 
 
 unsigned int floatToHexPrint(float f);

@@ -16,6 +16,7 @@ limitations under the License.
 
 #include <ctype.h>
 #include "patcher_utility.h"
+#include "fileOperations.h"
 
 const char* KEY_HORIZONTAL= "horizontalRes";
 const char* KEY_VERTICAL = "verticalRes";
@@ -25,7 +26,6 @@ const char* KEY_BACKUP_NAME = "backupExecutableName";
 const char* KEY_WIDESCREEN_HEX = "widescreenHexValues";
 const char* KEY_SQUARESCREENVAL_1 = "squareScreenValue1";
 const char* KEY_SQUARESCREENVAL_2 = "squareScreenValue2";
-const size_t BUF_SIZE = 256;
 Boolean oldAspectRatio = false;
 
 
@@ -38,7 +38,19 @@ unsigned int floatToHexPrint(float f){
 //hex to replace for 48:9 : AB AA AA 40
 void beginPatch(){
     StrMap* map = readConfig(); //Fill map with data from config file
-
+    char backupBool[BUF_SIZE];
+    char backupName[BUF_SIZE];
+    memset(backupBool, 0, BUF_SIZE);
+    memset(backupName,0,BUF_SIZE);
+    sm_get(map, KEY_BACKUP, backupBool, BUF_SIZE);
+    sm_get(map, KEY_BACKUP_NAME,backupName,BUF_SIZE);
+    if(!strcmp(backupBool, "true")){
+        LogI("You have selected to backup your exe. It will be backed up to %s", backupName);
+    }else{
+        LogW("You have executable backup disabled. Assuming you know what you're doing.");
+    }
+    LogI("If you're ready to proceed, press enter, otherwise close the window");
+    getchar();
     int size = sm_get(map, KEY_EXEC, NULL, 0);
     char* fileName = malloc(size);
     sm_get(map, KEY_EXEC, fileName, size);
@@ -46,13 +58,16 @@ void beginPatch(){
     BinaryFile* binaryFile = getBinaryFile(fileName);
 
     fillConfig(binaryFile, map);
+    if(!strcmp(backupBool,"true")){
+        backupFile(binaryFile->fileName, binaryFile->backupExecutableName);
+    }
     patchInitMessage(binaryFile);
     patch( binaryFile->bytes, binaryFile->lookFor, binaryFile->replaceWith, binaryFile->binarySize);
     if(oldAspectRatio){
-        LogD("Applying additional patch measures for aspect ratios less than 4:3");
+        LogI("Applying additional patch measures for aspect ratios less than 4:3");
         patch(binaryFile->bytes, binaryFile->lookForSquareScreenValue1, binaryFile->replaceWith, binaryFile->binarySize);
         patch(binaryFile->bytes, binaryFile->lookForSquareScreenValue2, binaryFile->replaceWith, binaryFile->binarySize);
-        LogD("Finished additional patch");
+        LogI("Finished additional patch");
     }
     writeChanges(binaryFile);
     free(fileName);
@@ -65,10 +80,10 @@ void patch(byte* byteArray, byte* lookFor, byte* replaceWith, unsigned long byte
 }
 
 unsigned long findHexLocation(byte* byteArray, byte* lookFor, unsigned long byteArraySize, long replacementLength){
-    LogD("Beginning lookup of hex values");
+    LogI("Beginning lookup of hex values");
     char lookingForString[BUF_SIZE];
     byteToString(lookFor,lookingForString,BUF_SIZE);
-    LogD("Looking for %s", lookingForString);
+    LogI("Looking for %s", lookingForString);
     int lookForIndex = 0;
     int lookForSize = replacementLength;
     unsigned long foundIndex = 0;
@@ -77,14 +92,14 @@ unsigned long findHexLocation(byte* byteArray, byte* lookFor, unsigned long byte
         if(byteArray[i] == lookFor[lookForIndex]){
             if(lookForIndex++ == 0){
                 if(DEBUG_MODE)if(lookForIndex >= 2) {
-                    LogV("Found match at index %d", lookForIndex);
-                    LogV("Value: %x", byteArray[i]);
+                    LogMV("Found match at index %d", lookForIndex);
+                    LogMV("Value: %x", byteArray[i]);
                 }
                 foundIndex = i;
             }
             if(lookForIndex == lookForSize){
-                LogV("!FOUND A MATCH! foundIndex: %ld lookForIndex: %d", lookForIndex, foundIndex);
-                LogV("Found result at index %ld", foundIndex);
+                LogMV("!FOUND A MATCH! foundIndex: %ld lookForIndex: %d", lookForIndex, foundIndex);
+                LogMV("Found result at index %ld", foundIndex);
                 found = 1;
                 break;
             }
@@ -118,19 +133,19 @@ void patchInitMessage(BinaryFile* binaryFile) {
     byte* replaceWithVal = binaryFile->replaceWith;
     char buffer[BUF_SIZE];
     byteToString(lookFor,buffer,BUF_SIZE);
-    LogD("Beginning widescreen patch...");
-    LogD("Looking for %s", buffer);
+    LogI("Beginning widescreen patch...");
+    LogI("Looking for %s", buffer);
     byteToString(replaceWithVal,buffer,BUF_SIZE);
-    LogD("For %.fx%.f resolution, the replacement value is %s",hRes,vRes, buffer);
-    LogV("%f <= %f", (hRes/vRes), ((4.0f/3.0f)+0.000001f));
+    LogI("For %.fx%.f resolution, the replacement value is %s",hRes,vRes, buffer);
+    LogMV("%f <= %f", (hRes/vRes), ((4.0f/3.0f)+0.000001f));
     if(hRes/vRes <= (4.0f/3.0f)+0.000001f){ //checking for older aspect ratios
         char bufferTwo[BUF_SIZE];
         char bufferThree[BUF_SIZE];
         byteToString(lookForSquare1,bufferTwo,BUF_SIZE);
         byteToString(lookForSquare2,bufferThree,BUF_SIZE);
-        LogD("Detected an older aspect ratio, additional patching will occur");
-        LogD("Also replacing %s and %s",bufferTwo, bufferThree);
-        LogD("with %s",buffer);
+        LogI("Detected an older aspect ratio, additional patching will occur");
+        LogI("Also replacing %s and %s",bufferTwo, bufferThree);
+        LogI("with %s",buffer);
         oldAspectRatio = true;
     }
 }
@@ -187,7 +202,7 @@ size_t writeChanges(BinaryFile *binaryFile){
         LogE("Expected to write %d bytes", binaryFile->binarySize);
         LogE("Wrote %d bytes", result);
     }else{
-        LogD("Patch appears to have been applied successfully! Yay!");
+        LogI("Patch appears to have been applied successfully! Yay!");
     }
     fclose(file);
     return result;
@@ -219,10 +234,10 @@ int getNumHexEntries(char* hexVals){
 }
 
 byte hexToUnsignedChar(char* hexVal){
-    LogV("Attempting to convert %c%c", hexVal[0], hexVal[1]);
+    LogMV("Attempting to convert %c%c", hexVal[0], hexVal[1]);
     byte val1 = hexCharToByte(hexVal[0]) * 0x10;
     byte val2 = hexCharToByte(hexVal[1]);
-    LogV("Val1 = %d, Val2 = %d, Total = %d", val1, val2, val1+val2);
+    LogMV("Val1 = %d, Val2 = %d, Total = %d", val1, val2, val1+val2);
     return (val1+val2);
 }
 
@@ -243,7 +258,7 @@ byte* calculateNewHex(float horizontal, float vertical){
  * assumes 32 bit float
  */
 byte* floatToHex(float val){
-    LogV("Float val %f", val);
+    LogMV("Float val %f", val);
     byte* hexVals = malloc(sizeof(float));
     hexVals[0] = ((byte*)&val)[0];
     hexVals[1] = ((byte*)&val)[1];
@@ -251,7 +266,7 @@ byte* floatToHex(float val){
     hexVals[3] = ((byte*)&val)[3];
     char buffer[BUF_SIZE];
     byteToString(hexVals,buffer,BUF_SIZE);
-    LogV("Hex values to replace %s", buffer);
+    LogMV("Hex values to replace %s", buffer);
     return hexVals;
 }
 

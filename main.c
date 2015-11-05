@@ -30,10 +30,8 @@ limitations under the License.
 //hex is 40 40 40 40
 //hex to replace: 64 75 64 65
 int main() {
+    printf("\n\n");
     initLogger();
-    LogW("This currently does not back up your executable. Be sure to back it up!");
-    LogW("If you're ready to proceed, press enter, otherwise close the window");
-    if(!DEBUG_MODE)getchar();
     beginPatch();
     printSummary();
 

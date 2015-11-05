@@ -8,7 +8,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 
 set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} -std=gnu11)
-set(SOURCE_FILES main.c readFile.c readFile.h CCS_CLogger.c CCS_CLogger.h common.c common.h
+set(SOURCE_FILES main.c fileOperations.c fileOperations.h CCS_CLogger.c CCS_CLogger.h common.c common.h
         patcher_utility.c patcher_utility.h strmap.c strmap.h)
 
 add_executable(MGS_V_Patch ${SOURCE_FILES} ${CONFIG_FILES})
@@ -20,3 +20,7 @@ add_custom_command(TARGET MGS_V_Patch POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${PROJECT_SOURCE_DIR}/MGSV_TPP_WideScreen_Patch.cfg"
         $<TARGET_FILE_DIR:MGS_V_Patch>)
+add_custom_command(TARGET MGS_V_Patch POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "$<TARGET_FILE_DIR:MGS_V_Patch>/MGS_V_Patch.exe"
+        C:/Games/steam/steamapps/common/MGS_TPP)

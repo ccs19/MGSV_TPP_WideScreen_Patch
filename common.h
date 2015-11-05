@@ -26,7 +26,7 @@ limitations under the License.
 #include "strmap.h"
 #include "CCS_CLogger.h"
 
-#define DEBUG_MODE 0
+#define DEBUG_MODE 1
 
 typedef unsigned char byte;
 typedef enum{
@@ -35,13 +35,9 @@ typedef enum{
 }Boolean;
 
 typedef enum{
-    ZERO = 0,
-    ONE = 1,TWO=2,THREE=3,FOUR=4,FIVE=5,SIX=6,SEVEN=7,EIGHT=8,NINE=9,A=10,B=11,C=12,D=13,E=14,F=15
+    ZERO=0,ONE=1,TWO=2,THREE=3,FOUR=4,FIVE=5,SIX=6,
+    SEVEN=7,EIGHT=8,NINE=9,A=10,B=11,C=12,D=13,E=14,F=15
 }CCS_HEX;
-
-typedef enum{ //from left to right
-    FIRST
-}CCS_HEX_MASK;
 
 void printSummary();
 

@@ -30,7 +30,7 @@ typedef struct{
     byte* replaceWith;
     int backupExecutable;
     char* backupExecutableName;
-    long binarySize;
+    unsigned long binarySize;
     char* fileName;
     byte* bytes;
 }BinaryFile;
@@ -48,6 +48,16 @@ FILE* openBinaryFile(char* name, char* args);
 byte* readAllBytes(FILE* file, unsigned long size);
 
 void binaryFileInfo(BinaryFile* binaryFile);
+
+FILE* checkForExistingFile(char* fileName);
+
+FILE* checkForExistingFileRecurse(char* fileName, int num);
+
+char* parseFileName(char* fileName, char* fileNameBuffer, size_t bufSize, int fileNum);
+
+Boolean backupFile(char* fileName, char* backupName);
+
+Boolean createBackup(FILE* original, FILE* backup);
 
 char* getFullyQualifiedPath(char* fileName);
 
