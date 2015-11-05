@@ -43,3 +43,7 @@ void printError(int errorNum){
     if(!DEBUG_MODE)getchar();
     printSummary();
 }
+
+char* boolCompare(void* one, void* two, size_t size){
+    return (memcmp(one,two,size))? "false" : "true";
+}

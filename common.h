@@ -29,6 +29,10 @@ limitations under the License.
 #define DEBUG_MODE 0
 
 typedef unsigned char byte;
+typedef enum{
+    false=0,
+    true=1
+}Boolean;
 
 typedef enum{
     ZERO = 0,
@@ -42,6 +46,8 @@ typedef enum{ //from left to right
 void printSummary();
 
 void printError(int errorNum);
+
+char* boolCompare(void* one, void* two, size_t size);
 
 
 #endif //MGS_V_PATC_COMMON_H

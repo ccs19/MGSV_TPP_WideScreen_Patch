@@ -24,8 +24,10 @@ limitations under the License.
 typedef struct{
     float horizontalRes;
     float verticalRes;
-    unsigned char* lookFor;
-    unsigned char* replaceWith;
+    byte* lookFor;
+    byte* lookForSquareScreenValue1;
+    byte* lookForSquareScreenValue2;
+    byte* replaceWith;
     int backupExecutable;
     char* backupExecutableName;
     long binarySize;
@@ -43,9 +45,9 @@ unsigned long getFileSizeInBytes(FILE* file);
 
 FILE* openBinaryFile(char* name, char* args);
 
-byte* readAllBytes(FILE* file, unsigned long size, unsigned long* bytesRead);
+byte* readAllBytes(FILE* file, unsigned long size);
 
-void binaryFileInfo(BinaryFile* binaryFile, unsigned long bytesRead);
+void binaryFileInfo(BinaryFile* binaryFile);
 
 char* getFullyQualifiedPath(char* fileName);
 

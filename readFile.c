@@ -34,8 +34,11 @@ StrMap* readConfig() {
             val = strtok(NULL, "=");
             if(key != NULL && val != NULL && (strcmp(key, "\n") != 0)) {
                 LogV("Key: %s, Val: %s", key, val);
+                if(val[strlen(val)-1] == '\n') {
+                    LogV("Key formatting: replacing %c with %c", val[strlen(val)-1], '\0');
                     val[strlen(val) - 1] = '\0';
-                    sm_put(map, key, val);
+                }
+                sm_put(map, key, val);
             }
         }
     }else{
@@ -51,31 +54,22 @@ BinaryFile* getBinaryFile(char* name){
     LogV("Entering getBinaryFile");
     FILE* file = openBinaryFile(name, "r+b");
     unsigned long size = getFileSizeInBytes(file);
-    unsigned long bytesRead = 0;
 
     BinaryFile* binaryFile = malloc(sizeof(BinaryFile));
     binaryFile->fileName = malloc((strlen(name)+1));
     memcpy(binaryFile->fileName, name, (strlen(name)+1));
     binaryFile->binarySize = size;
-    binaryFile->bytes = readAllBytes(file, size, &bytesRead);
-    binaryFileInfo(binaryFile,bytesRead);
+    binaryFile->bytes = readAllBytes(file, size);
+    binaryFileInfo(binaryFile);
     fclose(file); //TODO add a check for successful close.
     LogV("Exiting getBinaryFile");
     return binaryFile;
 }
 
-void binaryFileInfo(BinaryFile* binaryFile, unsigned long bytesRead){
+void binaryFileInfo(BinaryFile* binaryFile){
     LogD("Completed read of binary file. Stats:");
     LogD("Name: %s",binaryFile->fileName);
-    LogD("Expected bytes read: %ld", binaryFile->binarySize +1);
-    LogD("Actual bytes read: %ld", bytesRead);
-    /**if(bytesRead == binaryFile->binarySize+1){
-        LogD("Successfully loaded file :-)");
-    }else{
-        LogE("Failed to read the entire file, cannot continue");
-        printSummary();
-    }**/
-
+    LogD("Number of bytes read: %ld", binaryFile->binarySize +1);
 }
 
 unsigned long getFileSizeInBytes(FILE* file){
@@ -100,25 +94,10 @@ FILE* openBinaryFile(char* name, char* args){
     LogV("Exiting openBinaryFile(%s, %s)", name, args);
     return file;
 }
-/**
-int writeChanges(BinaryFile* binaryFile){
-    LogD("Attempting to write changes to %s", binaryFile->fileName);
-    FILE* file = openBinaryFile(binaryFile->fileName, "r+b");
-    if(!file){
-        int errorNum = errno;
-        LogE("Failed to write to file");
-        printError(errorNum);
-    }
-    LogD("Successfully wrote to %s.");
-    LogD("==========================");
-    LogD("If the patch was successful, the file sizes should be identical");
-    LogD("Original File Size: %ld", binaryFile->binarySize);
-    LogD("Patched  File Size: %ld", getFileSizeInBytes(file));
-    return 0;
-}**/
 
-byte* readAllBytes(FILE* file,unsigned long size, unsigned long* bytesRead) {
-    LogV("Entering function(%p, %ul, %p)", file, size, bytesRead);
+
+byte* readAllBytes(FILE* file,unsigned long size) {
+    LogV("Reading all bytes from file");
     if (!file) {
         LogE("Can't read file %p", file);
         printSummary();
@@ -128,13 +107,13 @@ byte* readAllBytes(FILE* file,unsigned long size, unsigned long* bytesRead) {
         while (feof(file) == 0) {
             fread(buffer, 1, size, file);
         }
-        LogV("Exiting function()");
+        LogV("Read entire file");
         return buffer;
     }
 }
 
 char* getFullyQualifiedPath(char* fileName){
-    char* pwd = getcwd(NULL, NULL);
+    char* pwd = getcwd(NULL, 0);
     LogD("Trying to open %s\\%s", pwd,fileName);
     char* fullyQualifiedPath = malloc(strlen(pwd) + strlen(fileName)+5);
     memset(fullyQualifiedPath,0,strlen(pwd) + strlen(fileName)+5);

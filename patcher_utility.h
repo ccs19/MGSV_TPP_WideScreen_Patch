@@ -20,26 +20,22 @@ limitations under the License.
 #include "common.h"
 #include "readFile.h"
 
-typedef struct{
-    unsigned char lookFor[4];
-    unsigned char replaceWith[4];
-}PatchValuesWideScreen;
 
 unsigned int floatToHexPrint(float f);
-
 void beginPatch();
-void patchInitMessage(BinaryFile* binaryFile, unsigned char* lookFor, unsigned char* changeTo);
+void patchInitMessage(BinaryFile* binaryFile);
 void fillMap();
 void fillConfig(BinaryFile*, StrMap*);
-void patch(BinaryFile* binaryFile, unsigned char* lookFor, unsigned char* changeTo);
-int writeChanges(BinaryFile* binaryFile);
-void applyBinaryPatch(BinaryFile *binaryFile, long foundIndex);
-long findHexLocation(BinaryFile* binaryFile, unsigned char* lookFor);
+void patch(byte* byteArray, byte* lookFor, byte*replaceWith, unsigned long byteArrayLength);
+size_t writeChanges(BinaryFile *binaryFile);
+void applyBinaryPatch(byte* byteArray, byte* replaceWith, unsigned long replacementLength, long foundIndex);
+unsigned long findHexLocation(byte* byteArray, byte* lookFor, unsigned long byteArrayLength, long replacementLength);
 char* getMapVal(StrMap* map, const char* key);
-unsigned char* parseHexValues(char* hexVals);
-unsigned char* calculateNewHex(float horizontal, float vertical);
+byte* parseHexValues(char* hexVals);
+byte* calculateNewHex(float horizontal, float vertical);
 int getNumHexEntries(char* hexVals);
-unsigned char hexToUnsignedChar(char* hexVal);
-unsigned char hctoi(const char h);
-unsigned char* floatToHex(float val);
+byte hexToUnsignedChar(char* hexVal);
+byte hexCharToByte(const char h);
+byte* floatToHex(float val);
+Boolean byteToString(byte* bytes, char* buffer, size_t bufSize);
 #endif //MGS_V_PATCH_UTILITY_H
