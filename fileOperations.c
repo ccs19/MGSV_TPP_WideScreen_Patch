@@ -17,6 +17,8 @@ limitations under the License.
 #include "fileOperations.h"
 #include <unistd.h>
 
+void backupFail(const char *fileName);
+
 void iter(const char *key, const char *value, const void *obj){
     LogMV("key: %s val: %s",key, value);
 }
@@ -91,7 +93,7 @@ FILE* openBinaryFile(char* name, char* args){
         int errorNum = errno;
         LogE("Error opening file %s. Cannot proceed.", name);
         printError(errorNum);
-        if(DEBUG_MODE)getchar();
+        if(!DEBUG_MODE)getchar();
         exit(0);
     }else{
         LogMV("Successfully opened file %s in mode %s at %p", name, args, file);
@@ -133,15 +135,16 @@ char* getFullyQualifiedPath(char* fileName){
 }
 
 Boolean backupFile(char* fileName, char* backupName){
-    LogMV("Starting backup. Backuping up %s to %s", fileName, backupName);
+    LogMV("Starting backup. Copying %s to %s", fileName, backupName);
     FILE* original = fopen(fileName,"r+b");
     FILE* backup;
     if(original == NULL){
-        LogW("Failed to open %s for backup. File will not be backed up.", fileName);
-        LogW("To continue anyway, press enter. Otherwise, close the windows and manually backup your file.");
-        getchar();
+        backupFail(fileName);
     }else{
         backup = checkForExistingFile(backupName);
+        if(backup == NULL){
+            backupFail(backupName);
+        }
     }
     if(!createBackup(original, backup)){
         LogW("The backup failed for some reason.");
@@ -149,6 +152,12 @@ Boolean backupFile(char* fileName, char* backupName){
         LogW("To continue anyway, press enter. Otherwise, close the windows and manually backup your file.");
         getchar();
     };
+}
+
+void backupFail(const char *fileName) {
+    LogW("Failed to open %s for backup. File will not be backed up.", fileName);
+    LogW("To continue anyway, press enter. Otherwise, close the windows and manually backup your file.");
+    getchar();
 }
 
 /**
@@ -161,14 +170,30 @@ FILE* checkForExistingFile(char* fileName){
 }
 
 FILE* checkForExistingFileRecurse(char* fileName, int num){
-    if( access( fileName, F_OK ) != -1 ) {
-        //File exists
-        return checkForExistingFileRecurse(fileName, ++num);
-    } else {
-        //File doesn't exist
-        char fileNameBuffer[BUF_SIZE];
-        parseFileName(fileName, fileNameBuffer, BUF_SIZE, num);
-        return fopen(fileName, "w+b");
+    LogMV("Check for existing file recurse", fileName, num);
+    char fileNameBuffer[BUF_SIZE];
+    memset(fileNameBuffer, 0, BUF_SIZE);
+    strcat(fileNameBuffer, fileName);
+    if(num > 0) {
+        char fileNum[BUF_SIZE];
+        itoa(num, fileNum, 10);
+        strcat(fileNameBuffer, "(");
+        strcat(fileNameBuffer, fileNum);
+        strcat(fileNameBuffer, ")");
+    }
+    if(num > 1000) {
+        LogW("Patcher failed to find a suitable backup location. Giving up.");
+    }
+    else{
+        if (access(fileNameBuffer, F_OK) == 0) {
+            //File exists
+            LogMV("File exists. Going to try %s(%d)", fileName, (num + 1));
+            return checkForExistingFileRecurse(fileName, ++num);
+        } else {
+            //File doesn't exist
+            LogMV("File doesn't exist. Returning %s(%d)", fileName, (num));
+            return fopen(fileNameBuffer, "w+b");
+        }
     }
 }
 
@@ -181,13 +206,6 @@ Boolean createBackup(FILE* original, FILE* backup){
     free(bytes);
 }
 
-char* parseFileName(char* fileName, char* fileNameBuffer, size_t bufSize, int num){
-    char* temp = fileName;
-    char* last = NULL;
-    //strtok(temp,".");
-    //TODO implement this.
-    return fileName;
-}
 
 
 

@@ -69,7 +69,7 @@ limitations under the License.
 /**Settings**/
 
 #define CCS_LOGS_LEVEL_DEFAULT CCS_LOG_LEVEL_DEBUG
-#define CCS_LOGS_LEVEL CCS_LOG_LEVEL_VERBOSE
+#define CCS_LOGS_LEVEL CCS_LOG_LEVEL_MORE_VERBOSE
 
 
 //Max log entry size. If you exceed this, you either need to shorten your logs

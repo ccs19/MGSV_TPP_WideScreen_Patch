@@ -7,12 +7,12 @@
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/common.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/fileOperations.c" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/fileOperations.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/patcher_utility.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/patcher_utility.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/fileOperations.c" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/fileOperations.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/simple.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/strmap.c" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/strmap.h" isTestSource="false" />
